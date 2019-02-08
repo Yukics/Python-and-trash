@@ -16,63 +16,44 @@ def Definir_Clase(ip_clase):
     elif primer_octeto < 224:
         clase = 3
     return clase
-
 #Función para pasar de decimal a binario
 def conversor_decimal_a_binario(numero_binario):
     numero_binario = format(int(numero_binario), '08b')
     return numero_binario
-
 #Funcion que convierte cualquier numero a decimal
 def bin_a_dec(x):
     return int(x, 2)
-
 #Convierte IP en Binario a IP en decimal
 def conversor_binario_a_decimal(ip_binario):
     ip_decimal = str(int(ip_binario[0:8],2))+"."+str(int(ip_binario[8:16],2))+"."+str(int(ip_binario[16:24],2))+"."+str(int(ip_binario[24:32],2))
     return ip_decimal
-
 #Funcion que combierte un numero decimal a una IP
 def conversor_decimal_ip(ip_decimal):
     ip_binario = conversor_decimal_a_binario(ip_decimal)
     ip = str(int(ip_binario[0:8], 2)) + "." + str(int(ip_binario[8:16], 2)) + "." + str(int(ip_binario[16:24], 2)) + "." + str(int(ip_binario[24:32], 2))
     return ip
-
-#Introduccion de datos de la 1a selección
-def Introduccion_de_datos_1():
-    ip_introduccion_datos_1 = input("Dame una IP:")
-    if esunaip(ip_introduccion_datos_1)==0:
-        print("\nAhora vas y la cascas, vuelta a empezar, mete una IP mono espasmodico con pistola\n")
-        main()
-
-    nredes = input("Dame el numero de redes que necesitas:")
-    if nredes.isdecimal()==True:
-        nredes = int(nredes)
-    else:
-        print("\nAhora vas y la cascas, vuelta a empezar, mete un numero de red, mono espasmodico con pistola\n")
-        main()
-
-    return ip_introduccion_datos_1, nredes
-
-#Introduccón de datos de la 2a selección
-def Introduccion_de_datos_2():
-    ip_introduccion_datos_2 = input("Dame una IP:")
-    if esunaip(ip_introduccion_datos_2)==0:
-        print("\nAhora vas y la cascas, vuelta a empezar, mete una IP mono espasmodico con pistola\n")
-        main()
-    hosts = input("Dame el numero de hosts que necesitas por ip:")
-    if hosts.isdecimal() == True:
-        hosts = int(hosts)
-    else:
-        print("\nAhora vas y la cascas, vuelta a empezar, mete un numero de host validos, mono espasmodico con pistola\n")
-        main()
-    return ip_introduccion_datos_2, hosts
-
-#Introducción de datos de la IP y hosts por red del VLSM
-def Introduccion_vlsm():
-    ip = input("Dame una IP:")
+#Comprueba si se introducen IP posibles(con la funcion esunaip)
+def introduccion_error_ip(ip):
     if esunaip(ip)==0:
         print("\nAhora vas y la cascas, vuelta a empezar, mete una IP mono espasmodico con pistola\n")
         main()
+    else:
+        return ip
+#Comprueba si se introducen numeros posibles
+def introduccion_error_redes_o_hosts(nredes):
+    if nredes.isdecimal() == True:
+        return nredes
+    else:
+        print("\nCasi cruck, esperate sentado\n")
+        main()
+#Introduccion de datos de la 1a selección
+def Introduccion_de_datos():
+    ip_introduccion_datos_1 = introduccion_error_ip(input("Dame una IP:"))
+    nredes = int(introduccion_error_redes_o_hosts(input("Dame el numero de redes que necesitas:")))
+    return ip_introduccion_datos_1, nredes
+#Introducción de datos de la IP y hosts por red del VLSM
+def Introduccion_vlsm():
+    ip = introduccion_error_ip(input("Dame una IP:"))
     numero = 1
     lista_host = []
     while numero > 0:
@@ -85,25 +66,22 @@ def Introduccion_vlsm():
             numero = 0
     print("Estas son las IP necesarias por red: ", lista_host, "\nApareceran de mayor a menor en los rangos\n")
     return ip, lista_host
-
 #Comprueba si es una IP que existe
 #Nota hacer la IP en binario y mirar si son 32 bits
 def esunaip(ip):
     ip = ip + "."
-    bucle = ip.count(".")
-    if bucle != 4:
-        print("ME CAGO EN TUS MUERTOS DANI X2")
+    contar_puntos = ip.count(".")
+    if contar_puntos != 4:
+        print("ME CAGO EN TUS MUERTOS DANI X2, QUE METAS UNA IP")
         return 0
-
     final = 0
     principio = 0
-    ip = ip + "."
     ip_bin = ""
     if ip[0:len(ip)-1].isdigit()==True:
-        print("ME CAGO EN TUS MUERTOS DANI")
+        print("ME CAGO EN TUS MUERTOS DANI, NO PONGAS NUMEROS SOLOS")
         return 0
     else:
-        for i in range(bucle):
+        for i in range(contar_puntos):
             letra = ""
             while letra != ".":
                 final += 1
@@ -120,35 +98,27 @@ def esunaip(ip):
             return 1
         else:
             return 0
-
 #Funcion de control de errores, ej mas hosts o redes de las permitidas
-def errores(ip, nredes, clase):
-    if esunaip(ip) == 0:
-        print("Esta IP no existe\n\n")
-        main()
+def errores(nredes, clase):
     if clase == 0:
-        print("No existen IPs cuyo octeto sea mayor de 8 bits\n\n")
+        print("\nNo existen IPs cuyo octeto sea mayor de 8 bits\n\n")
         main()
     elif clase == 1 and nredes > 8388608:
-        print("No pueden haber tantas redes en una IP de Clase A\n\n")
+        print("\nNo pueden haber tantas redes en una IP de Clase A\n\n")
         main()
     elif clase == 2 and nredes > 32768:
-        print("No pueden haber tantas redes en una IP de Clase B\n\n")
+        print("\nNo pueden haber tantas redes en una IP de Clase B\n\n")
         main()
     elif clase == 3 and nredes > 128:
-        print("No pueden haber tantas redes en una IP de Clase C\n\n")
+        print("\nNo pueden haber tantas redes en una IP de Clase C\n\n")
         main()
-
 #Funcion de control de errores si se introducen mas hosts de los permitidos
-def errores_vlsm(ip, clase, total_host):
+def errores_vlsm(clase, total_host):
     if len(total_host) <= 1:
         print("Debes introducir mas de un host")
         main()
     hosts = sum(total_host)
-    if esunaip(ip) == 0:
-        print("Esta IP no existe")
-        main()
-    elif clase == 1 and int(hosts) > 16777216:
+    if clase == 1 and int(hosts) > 16777216:
         print("No pueden haber tantos hosts en una IP de Clase A\n\n")
         main()
     elif clase == 2 and int(hosts) > 65536:
@@ -157,7 +127,6 @@ def errores_vlsm(ip, clase, total_host):
     elif clase == 3 and int(hosts) > 256:
         print("No pueden haber tantos hosts en una IP de Clase C\n\n")
         main()
-
 #Extrae la mascara de subred a partir del nredes necesario y su clase
 def Mascara(clase, nredes):
     base_2 = 2
@@ -170,7 +139,6 @@ def Mascara(clase, nredes):
     mascaracidr_binario = mascaracidr_binario + ("1" * mascaracidr) + ("0" * (32-mascaracidr))
     mascara = str(int(mascaracidr_binario[0:8], 2))+"."+str(int(mascaracidr_binario[8:16], 2))+"."+str(int(mascaracidr_binario[16:24], 2))+"."+str(int(mascaracidr_binario[24:32], 2))
     return mascara, mascaracidr
-
 #Devuelve el nº de redes a partir de la clase y del nº de hosts
 def sacarnredes(clase, hosts):
     hosts += 2
@@ -188,7 +156,6 @@ def sacarnredes(clase, hosts):
     nredes = bits_mascara_de_subred - bits_hosts
     nredes = 2 ** nredes
     return nredes
-
 #Devuelve una lista con las IP necesarias por red a partir del numero de hosts
 def contar_hosts_vlsm(lista_host):
     lista_host_redondeada = []
@@ -200,7 +167,6 @@ def contar_hosts_vlsm(lista_host):
             potencia += 1
         lista_host_redondeada.append(numero)
     return lista_host_redondeada
-
 #Poner los numeros de la IP en una lista
 def lista_con_numeros_ip(ip_limpia):
     ip_enteros = []
@@ -210,7 +176,6 @@ def lista_con_numeros_ip(ip_limpia):
     contador = 0
     contador_octeto = 0
     ip_limpia = ip_limpia + "."
-
     while contador_octeto < 4:
         while mierda != ".":
             mierda = ip_limpia[contador]
@@ -223,25 +188,19 @@ def lista_con_numeros_ip(ip_limpia):
         inic = fina-1
         contador += 1
     return ip_enteros
-
 #Funcion de impresión de rangos y mascaras
 def vlsm(ip, clase, lista_host):
-
     #Devuelve la IP con 0 dependiendo de la clase
     ip_limpia = sacar_rango_suma(ip, clase)
-
     #Devuelve la lista con los host redondeados a la potencia de dos mas cercana por arriba en lista
     lista_host = contar_hosts_vlsm(lista_host)
     ip_binario = ""
     ip_enteros = lista_con_numeros_ip(ip_limpia)
-
     #Ordena la lista con los host redondeados
     lista_host.sort(reverse=True)
-
     #Convierte la IP a formato binario de 32b
     for i in range(len(ip_enteros)):
         ip_binario = ip_binario + str(conversor_decimal_a_binario(ip_enteros[i]))
-
     #Bucle para presentar rangos y mascara de subred
     posicion = 0
     numero = 1
@@ -259,7 +218,6 @@ def vlsm(ip, clase, lista_host):
         ip_binario = conversor_decimal_a_binario(bin_a_dec(ip_sumada) + 1)
         numero += 1
         posicion += 1
-
 #Devuelve la IP sin los digitos que sobran segun la clase
 def sacar_rango_suma(ip, tipo_clase):
     end = 0
@@ -281,44 +239,40 @@ def sacar_rango_suma(ip, tipo_clase):
     elif tipo_clase == 3:
         ip = digito + "0"
         return ip
-
 #Funcion de estructura principal con metodo de selección
 def main():
     eleccion = 0
     while eleccion != 4:
-        print("Elige que quieres hacer:")
+        print("\nElige que quieres hacer:")
         print("         1. Sacar mascara de Subred a partir de IP y numeros de redes necesaria.")
         print("         2. Sacar mascara de Subred a partir de IP y numeros de host por red.")
         print("         3. VLSM Mascara de red de longitud variable y sus rangos.")
         print("         4. Salir.")
-
         eleccion = input()
-
         if eleccion.isdigit()==True:
             eleccion = int(eleccion)
             if eleccion > 4 or eleccion < 1:
-                print("Veo que no sabes ni leer puto simio")
+                print("Veo que no sabes ni leer simio nazi")
             if eleccion == 1:
-                ip, nredes = Introduccion_de_datos_1()
+                ip, nredes = Introduccion_de_datos()
                 clase = Definir_Clase(ip)
-                errores(ip, nredes, clase)
-                mascara, mascaracidr = Mascara(clase, nredes)
+                errores(nredes, clase)
+                mascara, mascaracidr = Mascara(clase, nredes-1)
                 print("\nEsta es la máscara de subred necesaria: " + str(mascara) + ", o en notación CIDR: /" + str(mascaracidr)+"\n")
             if eleccion == 2:
-                ip, hosts = Introduccion_de_datos_2()
+                ip, hosts = Introduccion_de_datos()
                 clase = Definir_Clase(ip)
                 nredes = sacarnredes(clase, hosts)
-                errores(ip, nredes, clase)
+                errores(nredes, clase)
                 mascara, mascaracidr = Mascara(clase, nredes)
                 print("\nEsta es la máscara de subred necesaria: " + str(mascara) + ", o en notación CIDR: /" + str(mascaracidr)+"\n")
             if eleccion == 3:
                 ip, lista_host = Introduccion_vlsm()
                 clase = Definir_Clase(ip)
                 lista_host = contar_hosts_vlsm(lista_host)
-                errores_vlsm(ip, clase, lista_host)
+                errores_vlsm(clase, lista_host)
                 vlsm(ip, clase, lista_host)
     quit()
-
 main()
 
 
