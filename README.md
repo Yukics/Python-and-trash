@@ -7,3 +7,6 @@
   
 # Manual Docker
   Lo hice para acordarme de ciertas cosas de Docker gracias a la chuleta que viene al final, y es una explcación un poco a grosso modo de que es Docker y como funciona.
+  
+# Script alternar escritorios
+  
