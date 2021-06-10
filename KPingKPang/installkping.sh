@@ -1,1 +1,1 @@
-nohup kpingkpang.py &
+nohup `pwd`kpingkpang.py &
