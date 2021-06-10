@@ -10,3 +10,5 @@
   
 # Script alternar escritorios
   
+# Script monitorizar ping webhook
+  Es un bucle que va haciendo pings de los hosts definidos en el archivo
