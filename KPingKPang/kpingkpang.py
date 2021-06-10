@@ -39,7 +39,7 @@ def ping(host):
     else:
         return False
 
-def habia_muerto(ip):
+#def habia_muerto(ip): (Cuando se levante que también avise)
 
 
 if __name__ == '__main__':
