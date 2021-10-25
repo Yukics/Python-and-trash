@@ -7,6 +7,7 @@ from PIL import Image
 
 file = sys.argv[1]
 
+#Basic checking input
 if file == "":
     print("Give a gif location /home/yuki/images/something.gif")
 
@@ -18,6 +19,7 @@ if os.path.isdir('/tmp/wall'):
 else:
     os.system('mkdir /tmp/wall')
 
+#Get number of frames of the gif
 num_key_frames = int(os.popen("identify "+file+"| wc -l").read())
 
 #Split gif into images
@@ -26,6 +28,7 @@ with Image.open(file) as im:
         im.seek(im.n_frames // num_key_frames * i)
         im.save('/tmp/wall/{}.png'.format(i))
 
+#Get timings of every frame
 times = os.popen("identify "+file+" | cut -d ':' -f 2").read().split("s")
 timing = [s.replace("\n", "") for s in times]
 while("" in timing) :
