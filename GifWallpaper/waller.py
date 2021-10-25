@@ -41,5 +41,5 @@ speed=4
 while True:
     for pic in zip(range(num_key_frames-1), timing):
         print(pic)
-        os.system('feh --bg-fill --cache-size 512MiB /tmp/wall/'+str(pic[0])+'.png')
+        os.system('feh --bg-fill /tmp/wall/'+str(pic[0])+'.png')
         time.sleep(float(pic[1])*speed)
