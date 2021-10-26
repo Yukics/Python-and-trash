@@ -10,5 +10,5 @@
 + Script alternar escritorios
 + Script monitorizar ping webhook
   - Es un bucle que va haciendo pings de los hosts definidos en el archivo
-+ Script to set gif as wallpaper in python
++ Script para definir un gif como wallpaper en bspwm
   
