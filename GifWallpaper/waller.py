@@ -1,5 +1,9 @@
 #!/bin/python3
 
+#BSPWM CONF
+#killwall wall.py
+#/rutascript/./wall.py /rutagif/imagen.gif
+
 import time
 import sys
 import os
