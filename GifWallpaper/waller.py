@@ -1,7 +1,7 @@
 #!/bin/python3
 
 #BSPWM CONF
-#killwall wall.py
+#killall wall.py
 #/rutascript/./wall.py /rutagif/imagen.gif
 
 import time
