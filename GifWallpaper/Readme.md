@@ -19,5 +19,5 @@ $./waller.py /home/yuki/images/something.gif &
 
 If you want to add it on bspwmrc you can simply:
 ```bash
-$echo "/location_of_script/./waller.py /gif_location/hello.gif &" > /bspwmrc_location/bspwmrc
+$echo "/location_of_script/./waller.py /gif_location/hello.gif &" >> /bspwmrc_location/bspwmrc
 ```
