@@ -1,5 +1,7 @@
 #/bin/python3
 
+#Useful docs: https://www.w3schools.com/python/ref_requests_response.asp
+
 import sys
 import requests
 from urllib3.exceptions import InsecureRequestWarning
