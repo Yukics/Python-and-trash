@@ -10,10 +10,10 @@ requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 #Check if n parameters are fine
 if len(sys.argv) >2:
     print("Demasiados parámetros")
-    exit
+    sys.exit(1)
 elif len(sys.argv) < 0:
     print("Introduce algún parámetro")
-    exit
+    sys.exit(1)
 elif len(sys.argv) == 2:
     fichero = sys.argv[1]
 
